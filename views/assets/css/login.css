@@ -1,0 +1,72 @@
+html,
+body {
+    height: 100%;
+}
+
+.row{
+   
+    margin: 20px;
+}
+html {
+    display: table;
+    margin: auto;
+}
+body {
+    display: table-cell;
+    vertical-align: middle;
+    background-image: url("../images/bkg.jpg");
+
+}
+
+img{
+
+  opacity: 0;
+}
+
+#login-page {
+   width: 500px;
+}
+
+.central{
+
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;   
+ 
+}
+
+.btn-small{
+
+    
+    display: inline-block;
+    width: 85px;
+    transition: all 0.5s;
+    cursor: pointer;
+   
+}
+
+.btn-small span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .btn-small span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -200px;
+    transition: 0.5s;
+  }
+
+  .btn-small:hover span {
+    padding-right: 12px;
+  }
+  
+  .btn-small:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+
