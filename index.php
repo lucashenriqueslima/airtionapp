@@ -25,6 +25,7 @@ $router->get("/recuperar", "Web:forget", "web.forget");
 $router->get("/senha/{email}/{forgert}", "Web:reset", "web.reset");
 
 
+
 /**
 * AUTH
 */
@@ -33,7 +34,9 @@ $router->post("/login", "Auth:login", "auth.login" );
 $router->post("/request", "Auth:request", "auth.request"); 
 $router->post("/forget", "Auth:forget", "auth.forget" );
 $router->post("/reset", "Auth:reset", "auth.reset" );
-$router->post("/administrator/login", "Auth:adminLogin", "auth.adminLogin");
+
+$router->post("/administrator/login", "Auth:login_admin", "auth.login_admin");
+$router->post("/me/administrator/register", "Auth:register", "auth.register"); 
 
 
 /**
@@ -47,15 +50,16 @@ $router->get("/sair", "App:logoff", "app.logoff");
  * ADMINISTRATOR
  */
 $router->group("/administrator");
-$router->get("/", "Admin:login", "admin.login");
+$router->get("/", "WebAdmin:login", "webadmin.login");
 
 /**
-* PROFILE ADMIN
+* PROFILE ADMINISTRATOR
 */
-$router->group("administrator/me");
-$router->get("/", "Admin:home", "admin.home");
-$router->get("/usuarios", "admin:users", "admin.users");
-$router->get("/registrar", "admin:register", "admin.register");
+$router->group("/administrator");
+$router->get("/me", "AppAdmin:home", "appadmin.home");
+$router->get("/me/usuarios", "appadmin:users", "appadmin.users");
+$router->get("/me/registrar", "appadmin:register", "appadmin.register");
+$router->get("/me/sair", "AppAdmin:logoff", "appadmin.logoff");
 
 /**
 * ERRORS

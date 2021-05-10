@@ -26,9 +26,9 @@
 
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
-  <li><a href="#!" class="black-text">Editar</a></li>
+  <li><a href="<?= $router->route("appadmin.register"); ?>" class="black-text">Criar</a></li>
   <li class="divider"></li>
-  <li><a href="#!" class="black-text">Criar</a></li>
+  <li><a href="<?= $router->route("appadmin.list"); ?>" class="black-text">Listar</a></li>
 
 </ul>
 
@@ -48,10 +48,10 @@
     <a href="#!" class="brand-logo center-on-med-and-down">Logo</a>
   
       <ul class="right">
-      <li><a class="dropdown-trigger hide-on-med-and-down " href="#!" data-target="dropdown1">Perfil<i class="material-icons right">arrow_drop_down</i></a></li>
+      <li><a class="dropdown-trigger hide-on-med-and-down " href="#!" data-target="dropdown1">Usuários<i class="material-icons right">arrow_drop_down</i></a></li>
       <li><a class="dropdown-trigger hide-on-med-and-down " href="#!" data-target="dropdown2">Contato<i class="material-icons right">arrow_drop_down</i></a></li>
       
-      <li><a href="<?= $router->route("app.logoff"); ?>"><i class="material-icons right">exit_to_app</i>Sair</a></li>
+      <li><a href="<?= $router->route("appadmin.logoff"); ?>"><i class="material-icons right">exit_to_app</i>Sair</a></li>
       </ul>
     </div>
   </nav>
@@ -63,11 +63,13 @@
         <img src="<?=asset("images/background.jpg")?>">
       </div>
      
-      <a href="#name"><span class="white-text name"><?= $_SESSION["name"] ?></span></a>
-      <a href="#email"><span class="white-text email"><?= $_SESSION["email"] ?></span></a>
+      <a href="#name"><span class="white-text name"><?= $_SESSION["nameAdmin"] ?></span></a>
+      <a href="#email"><span class="white-text email"><?= $_SESSION["emailAdmin"] ?></span></a>
     </div></li>
-    <li><a  class="waves-effect" href="#!"><i class="material-icons">person</i>Editar Perfil</a></li>
-    <li><a  class="waves-effect" href="#!"><i class="material-icons">person_add</i>Criar Novo Perfil</a></li>
+    <li><a  class="waves-effect" href="#!"><i class="material-icons">person_add</i>Criar Usuário</a></li>
+    <li><a  class="waves-effect" href="#!"><i class="material-icons">people</i>Listar Usuário</a></li>
+    
+    
     <li><div class="divider"></div></li>
 
     <li><a  class="waves-effect" href="#!"><i class="material-icons">contacts</i>Formas de Contato</a></li>
@@ -75,11 +77,9 @@
   </ul>
   </div>
 
-<main class="container white">
+<main class="container pddcontainer">
     <?= $v->section("content"); ?>
 </main>
-
-<section>
 
 
 
@@ -90,6 +90,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="<?= asset("/js/form.js"); ?>"></script>
 <script src="<?= asset("/js/slide.js"); ?>"></script>
+
+<?= $v->section("scripts"); ?>
+
 <?= flash() ?>
 </body>
 </html>

@@ -33,38 +33,32 @@ function site(string $param = null): string
         }
        
     }
-        function flash()
-        {
-
-            if(isset($_SESSION['error'])){
-
-             
-         
-
-                echo '<script>$(window).on("load", function(){
-                M.toast({
-                    html: "'.$_SESSION['error'].'",
-                    displayLength: 2000,
-                    classes:"red"
-                })  });</script>';
-
-                  unset($_SESSION['error']);
-               
-
-            }elseif(isset($_SESSION['success'])){
-
-                echo '<script>M.toast({
-                    html: "'.$_SESSION['success'].'",
-                    displayLength: 2500,
-                    classes:"light-green darken-2"
-                  
-                })</script>';
-
-                unset($_SESSION['success']);
-
-            }
+    function flash(string $type = null, string $message = null): ?string
+    {
+        if($type && $message){
+            $_SESSION["flash"] = [
+                "type"=> $type,
+                "message"=> $message
+            ];
             
+            return null;
         }
+
+        if(!empty($_SESSION["flash"]) && $flash = $_SESSION["flash"]){
+            
+            echo '<script>M.toast({
+                html: "'.$_SESSION['flash']['message'].'",
+                displayLength: 3000,
+                classes:"'.$_SESSION['flash']['type'].'"
+            })</script>';
+
+            unset($_SESSION['flash']);
+        }
+
+        return null;
+    }
+            
+
 
         
     

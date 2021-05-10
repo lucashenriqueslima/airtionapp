@@ -23,6 +23,8 @@
             PDO::ATTR_CASE => PDO::CASE_NATURAL
         ]
     ]);
+
+
     
     
   //  if($_SERVER["SERVER_NAME"] == "localhost"){

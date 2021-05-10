@@ -8,6 +8,6 @@ class User extends DataLayer
 {
     public function __construct()
     {
-        parent::__construct("users",["first_name", "last_name","email","cpf", "passwd"]);
+        parent::__construct("users",["first_name", "last_name","email","cpf", "level", "passwd"]);
     }
 }

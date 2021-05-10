@@ -1,4 +1,4 @@
-$(function () {
+$(window).on("load", function(){
     $("form").submit(function (e) {
         e.preventDefault();
 
@@ -17,14 +17,25 @@ $(function () {
             success: function (su) {
                 ajax_load("close");
 
+                setTimeout(function(){  
+
                 if (su.message) {
-                    var view = '<div class="message ' + su.message.type + '">' + su.message.message + '</div>';
-                    $(".login_form_callback").html(view);
-                    $(".message").effect("bounce");
+                                    
+                        M.toast({
+                            html: '' + su.message.message + '',
+                            displayLength: 3500,
+                            classes:'' + su.message.type + ''
+                        }) 
+                    
                     return;
                 }
 
-             
+                if (su.redirect) {
+                    window.location.href = su.redirect.url;
+                }
+
+            },730)
+            
             }
         });
 
@@ -32,11 +43,11 @@ $(function () {
             ajax_load_div = $(".ajax_load");
 
             if (action === "open") {
-                ajax_load_div.fadeIn(600).css("display", "flex");
+                ajax_load_div.fadeIn(500).css("display", "flex");
             }
 
             if (action === "close") {
-                ajax_load_div.fadeOut(600);
+                ajax_load_div.fadeOut(500);
             }
         }
     });

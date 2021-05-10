@@ -1,4 +1,4 @@
-<?php $v->layout("themes/_theme"); ?>
+<?php $v->layout("themes/_theme_admin"); ?>
 
 
 

@@ -30,12 +30,6 @@
 
         public function ajaxResponse(string $param = null, array $values = null): string
         {
-
-            if($param == null && $values == null){
-                return json_encode("a");
-            }else{
-
             return json_encode([$param => $values]);
-            }
         }
     }

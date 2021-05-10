@@ -10,42 +10,165 @@
         {
             parent::__construct($router);
         }
-    
+
         public function login ($data): void
         {
             $login = $data["email"];
             $passwd = filter_var($data["passwd"]);
-         
-            setFlash("1", "aasdadadad");
             
-
-            if(!$passwd){
-                echo $this->ajaxResponse();
-                setFlash("red", "a");
+            if(!$passwd || !$login){
+                echo $this->ajaxResponse("message", [
+                    "type" => "yellow darken-2",
+                    "message" => "Preencha os campos para poder entrar"
+                ]);
                 return;
             }
 
+            $l = 1;
             
-            $userEmail = (new User())->find("email = :e" , "e={$login}")->fetch();
-            $userCPF = (new User())->find("cpf = :c" , "c={$login}")->fetch();
+            $userEmail = (new User())->find("email = :e AND level = :l OR cpf = :c AND level = :l" , "e={$login}&c={$login}&l={$l} ")->fetch();
+
+            
+ 
            
 
 
             if ($userEmail && password_verify($passwd, $userEmail->passwd)) {
                 echo $this->ajaxResponse("redirect", ["url" => $this->router->route("app.home")]);
                 $_SESSION["user"] = $userEmail->id;
-            } elseif ($userCPF && password_verify($passwd, $userCPF->passwd)) {
-                echo $this->ajaxResponse("redirect", ["url" => $this->router->route("app.home")]);
-                $_SESSION["user"] = $userCPF->id;
-            } else {
-                echo $this->ajaxResponse();
-                setFlash("2", "23123asfafasfasdfg");
+                $_SESSION["email"] = $userEmail->email;
+                $_SESSION["name"] = $userEmail->first_name." ".$userEmail->last_name;
+
+                if(!empty($data["remember"])){
+                    setcookie("rememberUser", $login, strtotime("+2 month"), "/", "", false, true);
+                    }
+
+                if(!empty($_SESSION["name"])){
+                flash("blue darken-3", "Sessão iniciada, seja bem-vindo {$_SESSION["name"]}  :-)");
+                }
                 return;
                 
-            }
+            } 
+
+            echo $this->ajaxResponse("message", [
+                "type" => "red",
+                "message" => "Login ou senha incorreto(s)"
+            ]);
           
             return;
                 
         }
-    
+
+        public function login_admin ($data): void
+        {
+            $login = $data["email"];
+            $passwd = filter_var($data["passwd"]);
+            
+            if(!$passwd || !$login){
+                echo $this->ajaxResponse("message", [
+                    "type" => "yellow darken-2",
+                    "message" => "Preencha os campos para poder entrar"
+                ]);
+                return;
+            }
+
+                $l = 2;    
+
+            $userEmail = (new User())->find("email = :e AND level = :l" , "e={$login}&l={$l}")->fetch();
+
+            if ($userEmail && password_verify($passwd, $userEmail->passwd)) {
+                echo $this->ajaxResponse("redirect", ["url" => $this->router->route("appadmin.home")]);
+                $_SESSION["userAdmin"] = $userEmail->id;
+                $_SESSION["emailAdmin"] = $userEmail->email;
+                $_SESSION["nameAdmin"] = $userEmail->first_name." ".$userEmail->last_name;
+
+                if(!empty($_SESSION["nameAdmin"])){
+                flash("blue darken-3", "Seja bem-vindo ao painel de controle {$_SESSION["nameAdmin"]}  :-)");
+                }
+                return;
+                
+            } 
+
+            echo $this->ajaxResponse("message", [
+                "type" => "red",
+                "message" => "Login ou senha incorreto(s)"
+            ]);
+          
+            return;
+                
+        }
+ 
+        
+        public function register($data): void
+        {
+            $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+         #verifica se tem algum campo em branco!
+            if(in_array("", $data)){
+                echo $this->ajaxResponse("message", [
+                    "type" => "red",
+                    "message" => "Favor, preencha todos os campos para efetuar cadastro!"
+                ]);
+
+                return;
+            }
+            
+
+            if(!filter_var($data["email"], FILTER_VALIDATE_EMAIL)){
+                echo $this->ajaxResponse("message", [
+                    "type" => "red",
+                    "message" => "Favor, preencha todos os campos para efetuar cadastro!"
+                ]);
+                return;
+            }
+
+            $checkEmail = (new User())->find("email = :e", "e={$data["email"]}")->count();
+
+            if($checkEmail){
+                echo $this->ajaxResponse("message", [
+                    "type" => "red",
+                    "message" => "E-mail já cadastrado"
+                ]);
+                return;
+            }
+
+            $checkCPF = (new User())->find("cpf = :c", "c={$data["cpf"]}")->count();
+
+            if($checkCPF){
+                echo $this->ajaxResponse("message", [
+                    "type" => "red",
+                    "message" => "CPF já cadastrado"
+                ]);
+                return;
+            }
+
+            
+            if (empty($data["passwd"]) || strlen($data["passwd"]) < 6){
+                echo $this->ajaxResponse("message", [
+                    "type" => "red",
+                    "message" => "Insira uma senha com pelo menos 6 caracteres"
+                ]);
+                return;
+            }
+
+
+
+
+            
+            $user = new User();
+            $user->first_name = $data["first_name"];
+            $user->last_name = $data["last_name"];
+            $user->email = $data["email"];
+            $user->cpf = $data["cpf"];
+            $user->level = 1;
+            $user->passwd = password_hash($data["passwd"], PASSWORD_DEFAULT);
+
+            $user->save(); 
+
+            echo $this->ajaxResponse("redirect", [
+                "url"=>$this->router->route("appadmin.register")
+            ]);
+            flash("green", "Usuário cadastrado com sucesso");
+
+            return;
+        }
     }
