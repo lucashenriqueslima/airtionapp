@@ -59,6 +59,7 @@ $router->group("/administrator");
 $router->get("/me", "AppAdmin:home", "appadmin.home");
 $router->get("/me/usuarios", "appadmin:users", "appadmin.users");
 $router->get("/me/registrar", "appadmin:register", "appadmin.register");
+$router->get("/me/listar", "appadmin:list", "appadmin.list");
 $router->get("/me/sair", "AppAdmin:logoff", "appadmin.logoff");
 
 /**

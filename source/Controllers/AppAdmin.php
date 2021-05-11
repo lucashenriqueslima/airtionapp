@@ -28,7 +28,24 @@
         {
             echo $this->view->render("themes/dashboard_admin", [
                 "head"=> site("name")."Home",
-                "background"=> 'url("../images/bkg.jpg");'
+          
+                ]);
+        }
+
+        public function register()
+        {
+            echo $this->view->render("themes/register_admin", [
+                "head"=> site("name")."Registrar Usuário",
+          
+                ]);
+        }
+
+        public function list()
+        {
+
+            echo $this->view->render("themes/list_admin", [
+                "head"=> site("name")."Lista de Usuários",
+                "users" => (new User())->find()->order("first_name")->fetch(true),
           
                 ]);
         }
@@ -38,14 +55,6 @@
             session_destroy();     
             flash("blue darken-3", "Sessão encerrada, volte sempre {$this->user->first_name}  :-)");
             $this->router->redirect("webadmin.login");
-        }
-
-        public function register()
-        {
-            echo $this->view->render("themes/register_admin", [
-                "head"=> site("name")."Registrar Usuário",
-          
-                ]);
         }
 
     }
