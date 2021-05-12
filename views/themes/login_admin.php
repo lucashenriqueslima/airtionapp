@@ -22,7 +22,7 @@
         <div class="row">
           <div class="input-field col s12" style="height: 30px; margin: 5px 0 5px 0;">
             <div class="central">
-            <button class="btn-small waves-effect waves-light col s12" name="action" style="vertical-align:middle"> <span>ENTRAR </span>
+            <button class="btn-small waves-effect waves-light col s12" name="action"> <span>ENTRAR </span>
           </div>
         </div>
         </div>

@@ -2,7 +2,7 @@
 
     <div class="main_content_box">
     <div class="login">
-      <form class="form" action="<?= $router->route("auth.register"); ?>" method="post" autocomplete="off">
+      <form class="form" action="<?= $router->route("auth.register_admin"); ?>" method="post" autocomplete="off">
         <div class="row">
     <form class="col s12">
     <div class="row">

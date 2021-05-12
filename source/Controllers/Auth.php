@@ -24,9 +24,9 @@
                 return;
             }
 
-            $l = 1;
+            $lUser = level("user");
             
-            $userEmail = (new User())->find("email = :e AND level = :l OR cpf = :c AND level = :l" , "e={$login}&c={$login}&l={$l} ")->fetch();
+            $userEmail = (new User())->find("email = :e AND level = :l OR cpf = :c AND level = :l" , "e={$login}&c={$login}&l={$lUser} ")->fetch();
 
             
  
@@ -34,6 +34,7 @@
 
 
             if ($userEmail && password_verify($passwd, $userEmail->passwd)) {
+                
                 echo $this->ajaxResponse("redirect", ["url" => $this->router->route("app.home")]);
                 $_SESSION["user"] = $userEmail->id;
                 $_SESSION["email"] = $userEmail->email;
@@ -72,11 +73,12 @@
                 return;
             }
 
-                $l = 2;    
+                $l=2;
 
             $userEmail = (new User())->find("email = :e AND level = :l" , "e={$login}&l={$l}")->fetch();
-
+            
             if ($userEmail && password_verify($passwd, $userEmail->passwd)) {
+                
                 echo $this->ajaxResponse("redirect", ["url" => $this->router->route("appadmin.home")]);
                 $_SESSION["userAdmin"] = $userEmail->id;
                 $_SESSION["emailAdmin"] = $userEmail->email;
@@ -99,7 +101,7 @@
         }
  
         
-        public function register($data): void
+        public function register_admin($data): void
         {
             $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
          #verifica se tem algum campo em branco!

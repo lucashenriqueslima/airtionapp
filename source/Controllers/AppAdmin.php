@@ -43,9 +43,10 @@
         public function list()
         {
 
+            $l = 1;
             echo $this->view->render("themes/list_admin", [
                 "head"=> site("name")."Lista de Usuários",
-                "users" => (new User())->find()->order("first_name")->fetch(true),
+                "users" => (new User())->find("level = :l" , "l={$l}")->order("first_name")->fetch(true),
           
                 ]);
         }

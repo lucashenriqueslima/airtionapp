@@ -22,6 +22,11 @@ function site(string $param = null): string
         */
     }
 
+    function level(string $param): string
+    {      
+            return LEVEL[$param];
+    }
+
     function setFlash($type, $msg){
 
         if($type == 1){

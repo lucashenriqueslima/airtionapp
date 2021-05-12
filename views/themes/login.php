@@ -8,7 +8,7 @@
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix" title="Utilizar apenas números para CPF">account_circle</i>
-            <input class="validate" id="account" name="email" type="text" value="<?php if ($_COOKIE["rememberUser"]){echo $_COOKIE["rememberUser"]; }?>">
+            <input class="validate" id="account" name="email" type="text" value="<?php if (isset($_COOKIE["rememberUser"])){echo $_COOKIE["rememberUser"]; }?>">
             <label for="account">Email ou CPF</label>
           </div>
         </div>
@@ -23,7 +23,7 @@
           <div class="input-field login-text" style="padding: 0 18px 0 18px">
           <p>
         <label>
-        <input type="checkbox" name="remember" <?php if ($_COOKIE["rememberUser"]):?> checked <?php endif; ?>/>
+        <input type="checkbox" name="remember" <?php if (isset($_COOKIE["rememberUser"])):?> checked <?php endif; ?>/>
         <span>Lembrar meu usuário</span>
         </label>
         </p>
@@ -33,7 +33,9 @@
         <div class="row">
           <div class="input-field col s12" style="height: 30px; margin: 5px 0 5px 0;">
             <div class="central">
-            <button class="btn-small waves-effect waves-light col s12" name="action" style="vertical-align:middle"> <span>ENTRAR </span>
+            <button class="btn-small waves-effect waves-light col s12" style="vertical-align:middle"> <span>ENTRAR</span>
+
+            </form>
           </div>
         </div>
         </div>
@@ -46,6 +48,6 @@
           </div>          
         </div>
 
-      </form>
+
     </div>
   </div>

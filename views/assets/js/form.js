@@ -34,7 +34,7 @@ $(window).on("load", function(){
                     window.location.href = su.redirect.url;
                 }
 
-            },730)
+            },650)
             
             }
         });
@@ -43,11 +43,11 @@ $(window).on("load", function(){
             ajax_load_div = $(".ajax_load");
 
             if (action === "open") {
-                ajax_load_div.fadeIn(500).css("display", "flex");
+                ajax_load_div.fadeIn(400).css("display", "flex");
             }
 
             if (action === "close") {
-                ajax_load_div.fadeOut(500);
+                ajax_load_div.fadeOut(400);
             }
         }
     });
