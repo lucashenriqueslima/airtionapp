@@ -1,4 +1,8 @@
-<?php $v->layout("themes/_theme_admin"); ?>
+<?php
+
+use CoffeeCode\Router\Router;
+
+$v->layout("themes/_theme_admin"); ?>
 
 
 <?php if(!empty($users)):?>
@@ -13,16 +17,11 @@
 </thead>
 <tbody>
 
-       <?php foreach ($users as $user):?>
-        <tr>
-            <td> <b> <?= $user->first_name ?> </b></td>
-            <td><?= $user->email?></td>
-            <td><?= $user->cpf ?></td>
-            
-            <td> <button class="btn-small yellow darken-3 waves-effect waves-light" name="update"><span>Editar</span></button> <button class="btn-small  red waves-effect waves-light" name="delete"><span>Excluir</span></button> </td>
-          </tr>
+       <?php foreach ($users as $user):
+        
+        $v->insert("themes/fragment", ["user" => $user]);
 
-          <?php endforeach; ?>
+     endforeach; ?>
 </tbody>          
 <?php else: ?>
     <div class="row center">
@@ -51,9 +50,37 @@
 
 <?php $v->start("scripts"); ?>
     <script>
-    $(function (){
-        alert("a");
+
+$(window).on("load", function(){
+
+  $("body").on("click", "[data-action]", function(e) {
+    e.preventDefault();
+
+  var r = confirm("Tem certeza que deseja excluir o usuário?");
+  if (r == true) {
+    var data = $(this).data();
+    var div = $(this).parent().parent();
+
+    $.post(data.action, data, function(){
+      div.fadeOut();
+      setTimeout(function(){  
+      M.toast({
+                            html: 'Usuário deletado com sucesso!',
+                            displayLength: 3500,
+                            classes:' green '
+                        }) 
+                    
+                      },200)
+
+    },"json").fail(function (){
+        alert ("Erro ao processar requisição!");
     });
 
+  }
+
+
+  });
+
+});
     </script>
 <?php $v->end(); ?>

@@ -39,9 +39,9 @@ $router->post("/reset", "Auth:reset", "auth.reset" );
 $router->post("/administrator/login", "Auth:login_admin", "auth.login_admin");
 $router->post("/administrator/me/register", "Auth:register_admin", "auth.register_admin");
 
-$router->post("administrator/me/create", "Auth:create_admin", "auth.create_admin");    
-$router->post("administrator/me/edit", "Auth:edit_admin", "auth.edit_admin");
-$router->post("administrator/me/delete", "Auth:delete_admin", "auth.delete_admin");
+$router->post("/administrator/me/create", "Auth:create_admin", "auth.create_admin");    
+$router->post("/administrator/me/edit", "Auth:edit_admin", "auth.edit_admin");
+$router->post("/administrator/me/delete", "Auth:delete_admin", "auth.delete_admin");
 
 /**
 * PROFILE

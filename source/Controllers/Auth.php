@@ -173,4 +173,20 @@
 
             return;
         }
+
+        public function delete_admin(array $data): void
+        {
+            if(empty($data["id"])){
+                return;
+            }
+
+            $id = filter_var ($data["id"], FILTER_VALIDATE_INT);
+            $user = (new User())->findById($id);
+            if($user){
+                $user->destroy();
+            }
+
+            $callback["remove"] = true;
+            echo json_encode($callback);
+        }
     }
